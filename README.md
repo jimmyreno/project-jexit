@@ -1,6 +1,7 @@
 # project-jexit
 
 scaffolded using yeoman. uses browserify for local web-server.
+
 currently deployed to https://jimmyreno.github.io
 
 instructions
@@ -9,6 +10,7 @@ instructions
 
 2) install
 > npm install
+
 > bower update
 
 3) to run and display unit tests
