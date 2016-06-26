@@ -1,6 +1,7 @@
 # project-jexit
 
 scaffolded using yeoman. uses browserify for local web-server.
+currently deployed to https://jimmyreno.github.io
 
 instructions
 
