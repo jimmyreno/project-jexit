@@ -1,8 +1,7 @@
-(function (ArrayUtils, GeoUtils, $) {
+(function (ArrayUtils, GeoUtils, CustomerData, $) {
 
     'use strict';
 
-    /*eslint no-unused-vars: 1*/
 
     var nestedArray = [[1, 2, [3]], 4],
         intercomOfficeLocation = {
@@ -46,24 +45,21 @@
     var runCustomerInviter = function() {
         var customerInviteList = [];
 
-        $.getJSON('../raw_data/customers.json', function(customers) {
-            for (var c = 0; c < customers.length; c++) {
+        for (var c = 0; c < CustomerData.length; c++) {
 
-                // test if the customer is within 100km of the office
-                var customerLocation = {
-                    lat: customers[c].latitude,
-                    lng: customers[c].longitude
-                };
+            // test if the customer is within 100km of the office
+            var customerLocation = {
+                lat: CustomerData[c].latitude,
+                lng: CustomerData[c].longitude
+            };
 
-                var distance = GeoUtils.calculateDistanceBetweenPoints(intercomOfficeLocation, customerLocation);
-                if (distance <= 100) {
-                    customerInviteList.push(customers[c]);
-                    customerInviteList[customerInviteList.length - 1].distance = Math.round(distance);
-                }
+            var distance = GeoUtils.calculateDistanceBetweenPoints(intercomOfficeLocation, customerLocation);
+            if (distance <= 100) {
+                customerInviteList.push(CustomerData[c]);
+                customerInviteList[customerInviteList.length - 1].distance = Math.round(distance * 10) / 10;
             }
-
-            appendCustomerList(customerInviteList);
-        });
+        }
+        appendCustomerList(customerInviteList);
     };
 
     function main() {
@@ -74,4 +70,4 @@
 
     main();
 
-}(ArrayUtils, GeoUtils, $));
+}(ArrayUtils, GeoUtils, CustomerData, $));

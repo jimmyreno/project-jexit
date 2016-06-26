@@ -42,6 +42,7 @@
     "globals": {
         "ArrayUtils": true,
         "GeoUtils": true,
+        "CustomerData": true,
         "$": true
     }
   }
