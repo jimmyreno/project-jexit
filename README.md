@@ -9,6 +9,7 @@ instructions
 
 2) install
 > npm install
+> bower update
 
 3) to run and display unit tests
 > gulp serve:test
