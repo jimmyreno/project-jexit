@@ -11,13 +11,17 @@
 
             it('should do this', function() {
                 assert.equal(1, 1);
-            })
+            });
 
+            // the set of nested arrays to test, including gotchas.
             var testData = {
                 nestedArrays: [
                     [[1, 2, [3]], 4],
                     [[1, 2, [[3]], 4]],
-                    [[[[1, 2, [3]]], 4]]
+                    [[[[1, 2, [3]]], 4]],
+                    [null],
+                    null,
+                    []
                 ]
             };
 
@@ -59,42 +63,37 @@
                     lat: -6.2647391106306145,
                     lng: 53.35272532958628
                 },
-                toLocations: [
-                    {
+                validToLocation: {
                         lat: -6.2977804888419415,
                         lng: 53.35237856333328
-                    },
-                    {
-                        lat: -6.277954485815871,
-                        lng: 53.35989308703215
-                    },
-                    {
-                        lat: -6.2647391106306145,
-                        lng: undefined
-                    }
-                ]
+                },
+                invalidToLocation1: {
+                    lat: -6.2647391106306145,
+                    lng: undefined
+                },
+                invalidToLocation2: {}
             };
 
-            var runGeoUtilsTests = function(testInput) {
 
-                for (var i = 0; i < testInput.toLocations.length; i++) {
+            var validDistance = GeoUtils.calculateDistanceBetweenPoints(testData.fromLocation, testData.validToLocation),
+                invalidDistance1 = GeoUtils.calculateDistanceBetweenPoints(testData.fromLocation, testData.invalidToLocation1),
+                invalidDistance2 = GeoUtils.calculateDistanceBetweenPoints(testData.fromLocation, testData.invalidToLocation2);
 
-                    var fromLoc = testInput.fromLocation,
-                        toLoc = testInput.toLocations[i],
-                        distance = GeoUtils.calculateDistanceBetweenPoints(fromLoc, toLoc);
+            describe('distance calculator tests', function () {
 
-                    describe('distance calculator tests for ' + JSON.stringify(fromLoc) + JSON.stringify(toLoc), function () {
+                it('distance should be numeric for valid points', function () {
+                    assert.equal(typeof validDistance, 'number');
+                });
 
-                        it('output should be numeric', function () {
-                            assert.equal(typeof distance, 'number');
-                        });
+                it('distance should be null for invalid points', function () {
+                    assert.equal(invalidDistance1, null);
+                });
 
-                    });
-                }
+                it('distance should be null for null data', function () {
+                    assert.equal(invalidDistance2, null);
+                });
 
-            };
-
-            runGeoUtilsTests(testData);
+            });
 
         });
 

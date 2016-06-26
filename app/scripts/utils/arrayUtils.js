@@ -18,6 +18,9 @@ var ArrayUtils = (function() {
     */
     var flattenArray = function (array) {
 
+        if (!array) {
+            return [];
+        }
         // the 'flattened' array to store our integers
         var flattenedArray = [];
 

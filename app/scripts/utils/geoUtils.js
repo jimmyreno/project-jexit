@@ -12,7 +12,7 @@ var GeoUtils = (function() {
     /**
     * Calculates the absolute difference between 2 numbers
     */
-    var absoluteDifference = function (a, b) {
+    var absoluteDifference = function(a, b) {
         return Math.abs(a - b);
     };
 
@@ -24,6 +24,11 @@ var GeoUtils = (function() {
         return degrees * (Math.PI / 180);
     };
 
+    var isValidLocation = function(location) {
+        return location.lat && typeof location.lat === 'number'
+            && location.lng && typeof location.lng === 'number';
+    };
+
     /**
     *
     * Calculates the Great-Circle Distance between 2 points based on the
@@ -31,6 +36,10 @@ var GeoUtils = (function() {
     * https://en.wikipedia.org/wiki/Great-circle_distance
     */
     var calculateDistanceBetweenPoints = function(point1, point2) {
+
+        if (!(isValidLocation(point1) && isValidLocation(point2))) {
+            return null;
+        }
         var lat1 = point1.lat,
             lng1 = point1.lng,
             lat2 = point2.lat,
@@ -56,7 +65,8 @@ var GeoUtils = (function() {
             distance = centralAngleRadians * MEAN_EARTH_RADIUS;
 
         // console.log('\ndistance from \n\t' + JSON.stringify(point1) + '\n to \n\t'
-        //     + JSON.stringify(point2) + '\n' + distance + ' km');
+        //      + JSON.stringify(point2) + '\n' + distance + ' km');
+
         return distance;
     };
 

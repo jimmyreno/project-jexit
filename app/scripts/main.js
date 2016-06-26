@@ -49,8 +49,8 @@
 
             // test if the customer is within 100km of the office
             var customerLocation = {
-                lat: CustomerData[c].latitude,
-                lng: CustomerData[c].longitude
+                lat: parseFloat(CustomerData[c].latitude),
+                lng: parseFloat(CustomerData[c].longitude)
             };
 
             var distance = GeoUtils.calculateDistanceBetweenPoints(intercomOfficeLocation, customerLocation);
